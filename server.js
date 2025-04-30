@@ -13,10 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send(`<a href="/foods">El ejercicio 1 está en /foods</a>
-    <br>
-    <a href="/number">El ejercicio 2 está en /number</a>
-    `);
+  res.send("Funca!");
 });
 
 //Ejercicio 1
@@ -29,10 +26,32 @@ app.get("/foods", (req, res) => {
 app.post("/number", (req, res) => {
   const newNumber = req.body.number;
   numbersArray.push(newNumber);
+
   const MAX = Math.max(...numbersArray);
   const MIN = Math.min(...numbersArray);
 
   res.send(`Min: ${MIN}   Max: ${MAX}`);
+});
+
+//Ejercicio 3
+app.put("/users", (res, req) => {
+  const userId = req.params.id;
+  const sql = `DELETE FROM users WHERE id=${userID}`;
+  db.query(sql, (error, result) => {
+    if (error) throw error;
+    res.send(`User ${userId} deleted from the db.`);
+  });
+});
+
+// Método erroneo, al ser un params hay que añadirle un :{nombre del parametro} a la dirección y variable userId mal escrita
+
+app.delete("/users/:id", (res, req) => {
+  const userId = req.params.id;
+  const sql = `DELETE FROM users WHERE (id) = ${userId}`;
+  db.query(sql, (error, result) => {
+    if (error) throw error;
+    res.send(`User ${userId} deleted from the db.`);
+  });
 });
 
 app.listen(port, () => {
