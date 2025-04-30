@@ -1,0 +1,26 @@
+{
+  "name": "examen-backend-david-guillen",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidGuillenGarcia/examen-backend-david-guillen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidGuillenGarcia/examen-backend-david-guillen/issues"
+  },
+  "homepage": "https://github.com/DavidGuillenGarcia/examen-backend-david-guillen#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
