@@ -1,7 +1,6 @@
 const port = 8000;
 const baseURL = `http://localhost:${port}`;
 const foods = ["Paella", "Arroç al forn", "Arroç al senyoret"];
-let randomNumber;
 let numbersArray = [];
 
 const express = require("express");
@@ -18,19 +17,30 @@ app.get("/", (req, res) => {
 
 //Ejercicio 1
 app.get("/foods", (req, res) => {
-  randomNumber = Math.floor(Math.random() * 3);
-  res.send(`The food for today's lunch is ${foods[randomNumber]}`);
+  let randomNumber = Math.floor(Math.random() * foods.length);
+  let newFood = {
+    food: foods[randomNumber],
+  };
+  res.send(JSON.stringify(newFood));
 });
 
 //Ejercicio 2
-app.post("/number", (req, res) => {
+app.post("/minmax", (req, res) => {
   const newNumber = req.body.number;
-  numbersArray.push(newNumber);
+  if (!isNaN(newNumber)) {
+    numbersArray.push(newNumber);
 
-  const MAX = Math.max(...numbersArray);
-  const MIN = Math.min(...numbersArray);
+    const MAX = Math.max(...numbersArray);
+    const MIN = Math.min(...numbersArray);
+    const minmax = {
+      min: MIN,
+      max: MAX,
+    };
 
-  res.send(`Min: ${MIN}   Max: ${MAX}`);
+    res.send(JSON.stringify(minmax));
+  } else {
+    res.send(`${newNumber} is not a number`);
+  }
 });
 
 //Ejercicio 3
@@ -50,7 +60,11 @@ app.delete("/users/:id", (res, req) => {
   const sql = `DELETE FROM users WHERE (id) = ${userId}`;
   db.query(sql, (error, result) => {
     if (error) throw error;
-    res.send(`User ${userId} deleted from the db.`);
+    if (result.affectedRows > 0) {
+      res.status(200).send(`User ${userId} deleted from the db.`);
+    } else {
+      res.status(404).send(`User ${userId} not found`);
+    }
   });
 });
 
